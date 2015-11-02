@@ -75,15 +75,19 @@ class Philosopher extends Thread {
 	@Override
 	public void run() {
 
+		Color darkYellow = new Color(200, 200, 8);
+		Color LimeGreen = new Color(50, 205, 50);
+		
 		while (isAlive) {
+
 
 			currentColor = Color.RED;
 			gui.repaint();
 			waiting();
-			currentColor = Color.GREEN;
+			currentColor = LimeGreen;
 			gui.repaint();
 			eating();
-			currentColor = Color.YELLOW;
+			currentColor = darkYellow;
 			gui.repaint();
 			thinking();
 		}
@@ -159,7 +163,7 @@ class ForkManager extends JPanel {
 
 	public ForkManager() {
 		forks = new HashMap<Integer, Fork>();
-		this.setBackground(Color.GRAY);
+		this.setBackground(Color.WHITE);
 		start = new JButton("Start");
 		reset = new JButton("Reset");
 		ListenForButton lForButton = new ListenForButton();
@@ -188,20 +192,25 @@ class ForkManager extends JPanel {
 	// The table, philosophers, and TODO forks are drawn here.
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		// Table is painted.
-		g.setColor(Color.BLACK);
-		g.fillOval(325, 325, 150, 150);
+		//custom colors
+		Color darkYellow = new Color(200, 200, 8);
+		Color darkCyan = new Color(0, 199, 199);
+		Color limeGreen = new Color(50, 205, 50);
+		
+		Toolkit toolkit = Toolkit.getDefaultToolkit(); 
+        Image image = toolkit.getImage("src/diningTable.png"); 
+        g.drawImage(image, -68, -5, this);
 		// The color key is shown as strings.
 		g.setFont(new Font("Arial", Font.BOLD, 16));
 		g.setColor(Color.RED);
 		g.drawString("Red = waiting philosopher", 0, 12);
-		g.setColor(Color.GREEN);
+		g.setColor(limeGreen);
 		g.drawString("Green = eating philosopher", 0, 28);
-		g.setColor(Color.YELLOW);
+		g.setColor(darkYellow);
 		g.drawString("Yellow = thinking philosopher", 0, 44);
 		g.setColor(Color.DARK_GRAY);
 		g.drawString("Dark gray = unused fork", 0, 76);
-		g.setColor(Color.CYAN);
+		g.setColor(darkCyan);
 		g.drawString("Cyan = fork in use", 0, 94);
 		// Philosophers are each painted according to their draw methods.
 		for (int i = 1; i <= 5; i++) {
